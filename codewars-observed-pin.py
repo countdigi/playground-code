@@ -5,7 +5,7 @@
 import unittest
 import itertools
 
-def get_pins(sequence):
+def get_pins(observed):
 
     grid = [['1', '2', '3'],
             ['4', '5', '6'],
@@ -14,17 +14,17 @@ def get_pins(sequence):
 
     rows, cols = len(grid), len(grid[0])
 
-    possible = {}
+    map = {}
 
     for x in range(rows):
         for y in range(cols):
-            if grid[x][y]:
-                possible[grid[x][y]] =  [grid[x][y]] + [grid[a][b] for (a,b) in [(x+1,y), (x, y+1), (x-1, y), (x, y-1)] if a >= 0 and a < rows and b >= 0 and b < cols and grid[a][b]]
+            n = grid[x][y]
+            if n:
+                map[n] = [n] + [grid[x1][y1]
+                                for (x1,y1) in [(x+1,y), (x, y+1), (x-1, y), (x, y-1)]
+                                if x1 >= 0 and x1 < rows and y1 >= 0 and y1 < cols and grid[x1][y1]]
 
-    inputs = [possible[s] for s in sequence]
-
-    return [''.join(t) for t in itertools.product(*inputs)]
-
+    return [''.join(c) for c in itertools.product(*[map[d] for d in observed])]
 
 
 class Test(unittest.TestCase):
@@ -43,3 +43,17 @@ class Test(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
+
+
+# from itertools import product
+# pin = ["123",
+#        "456",
+#        "789",
+#        " 0 "]
+# loc = dict((pin[y][x],(x,y)) for x in range(3) for y in range(4) if pin[y][x] != ' ')
+#
+# dist = lambda x,y: abs(x[0]-y[0]) + abs(x[1]-y[1])
+#
+# adj    = dict((k,[l for l in loc if dist(loc[k],loc[l]) in (0,1)]) for k in loc)
+#
+# get_pins = lambda observed:list(map(''.join,product(*map(adj.get,observed))))
