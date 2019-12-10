@@ -7,10 +7,10 @@ import itertools
 
 def get_pins(observed):
 
-    grid = [['1', '2', '3'],
-            ['4', '5', '6'],
-            ['7', '8', '9'],
-            [None, '0', None]]
+    grid = ["123",
+            "456",
+            "789",
+            " 0 "]
 
     rows, cols = len(grid), len(grid[0])
 
@@ -19,10 +19,10 @@ def get_pins(observed):
     for x in range(rows):
         for y in range(cols):
             n = grid[x][y]
-            if n:
+            if n != " ":
                 map[n] = [n] + [grid[x1][y1]
                                 for (x1,y1) in [(x+1,y), (x, y+1), (x-1, y), (x, y-1)]
-                                if x1 >= 0 and x1 < rows and y1 >= 0 and y1 < cols and grid[x1][y1]]
+                                if x1 >= 0 and x1 < rows and y1 >= 0 and y1 < cols and grid[x1][y1] != " "]
 
     return [''.join(c) for c in itertools.product(*[map[d] for d in observed])]
 
@@ -44,6 +44,10 @@ class Test(unittest.TestCase):
 if __name__ == "__main__":
     unittest.main(verbosity=2)
 
+"""
+
+
+"""
 
 # from itertools import product
 # pin = ["123",
