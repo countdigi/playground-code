@@ -28,7 +28,6 @@ def get_pins(observed):
 
 
 class Test(unittest.TestCase):
-
     def test(self):
         expectations = [
                 ('8', ['5', '7', '8', '9', '0']),
@@ -43,21 +42,3 @@ class Test(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main(verbosity=2)
-
-"""
-
-
-"""
-
-# from itertools import product
-# pin = ["123",
-#        "456",
-#        "789",
-#        " 0 "]
-# loc = dict((pin[y][x],(x,y)) for x in range(3) for y in range(4) if pin[y][x] != ' ')
-#
-# dist = lambda x,y: abs(x[0]-y[0]) + abs(x[1]-y[1])
-#
-# adj    = dict((k,[l for l in loc if dist(loc[k],loc[l]) in (0,1)]) for k in loc)
-#
-# get_pins = lambda observed:list(map(''.join,product(*map(adj.get,observed))))
